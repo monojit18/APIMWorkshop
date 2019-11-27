@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "repoBaseUrl": {
+            "value": "file://Users/monojitdattams/Development/Projects/Workshops/APIMWorkshop/Standard"
+        },
+        "publisherEmail": {
+            "value": "modatta@microsoft.com"
+        },
+        "publisherName": {
+            "value": "MODATTA"
+        },
+        "ApimServiceName": {
+            "value": "autoapim-dev"
+        },        
+        "sku": {
+            "value": "Premium"
+        },        
+        "skuCount": {
+            "value": 2
+        }
+    }
+}
