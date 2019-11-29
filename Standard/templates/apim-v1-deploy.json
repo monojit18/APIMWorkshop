@@ -36,11 +36,11 @@
         "apiVersion": "2018-01-01",
         "scale": null,
         "properties": {
-          "displayName": "FETCH",
+          "displayName": "RETRIEVE",
           "method": "GET",
           "urlTemplate": "/get",
           "templateParameters": [],
-          "description": "Returns GET data.\n",
+          "description": "Fetches GET data.\n",
           "responses": [
             {
               "statusCode": 200,
