@@ -18,7 +18,7 @@
         "apiVersion": "2018-01-01",
         "scale": null,
         "properties": {
-          "displayName": "AutoFetch-dev",
+          "displayName": "AutoFetch",
           "apiRevision": "1",
           "description": "API Management facade for a very handy and free online HTTP tool",
           "serviceUrl": "https://httpbin.org",
