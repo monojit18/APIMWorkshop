@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimServiceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the API Management"
+            }
+        }
+    },
+    "variables": {
+        "apimProductName": "[concat(parameters('apimServiceName'), '/productAuto')]",
+        "apimProductPolicyName": "[concat(parameters('apimServiceName'), '/productAuto/policy')]",
+        "apimProductGroupName": "[concat(parameters('apimServiceName'), '/productAuto/autoapimgroup')]"
+
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/products",
+            "name": "[variables('apimProductName')]",
+            "apiVersion": "2018-01-01",
+            "scale": null,
+            "properties": {
+                "displayName": "Auto Product",
+                "description": "Include 1 API. Limited to 1 subscription per developer. Throttled at 3 calls per 10 second.",                
+                "subscriptionRequired": true,
+                "approvalRequired": true,
+                "subscriptionsLimit": 1,
+                "state": "published"
+            }
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products/policies",
+            "name": "[variables('apimProductPolicyName')]",
+            "apiVersion": "2018-01-01",
+            "properties": {
+                "policyContent": "<policies><inbound><rate-limit calls=\"3\" renewal-period=\"10\" /><base /></inbound><outbound><base /></outbound><backend><base /></backend><on-error><base /></on-error></policies>",
+                "contentFormat": "rawxml"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('apimServiceName'), 'productAuto')]"
+            ]
+        },
+        {
+            "type": "Microsoft.ApiManagement/service/products/groups",
+            "name": "[variables('apimProductGroupName')]",
+            "apiVersion": "2017-03-01",
+            "scale": null,
+            "properties": {},
+            "dependsOn": [
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('apimServiceName'), 'productAuto')]"
+            ]
+        }
+    ],
+    "outputs": {}
+}

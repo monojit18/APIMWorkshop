@@ -1,0 +1,67 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "apimServiceName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+        "apimAPIName": "[concat(parameters('apimServiceName'), '/autoFetch')]",
+        "apimOperationGet": "[concat(parameters('apimServiceName'), '/autoFetch/get')]",
+        "apimProductname": "[concat(parameters('apimServiceName'), '/productAuto/autoFetch')]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.ApiManagement/service/apis",
+        "name": "[variables('apimAPIName')]",
+        "apiVersion": "2018-01-01",
+        "scale": null,
+        "properties": {
+          "displayName": "AutoFetch-dev",
+          "apiRevision": "1",
+          "description": "API Management facade for a very handy and free online HTTP tool",
+          "serviceUrl": "https://httpbin.org",
+          "path": "autofetch",
+          "protocols": [
+            "http"
+          ],          
+          "apiVersion": "v1",
+          "apiVersionSetId": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '/api-version-sets/autoapimVersionSet')]"
+        }
+      },
+      {
+        "type": "Microsoft.ApiManagement/service/apis/operations",
+        "name": "[variables('apimOperationGet')]",
+        "apiVersion": "2018-01-01",
+        "scale": null,
+        "properties": {
+          "displayName": "FETCH",
+          "method": "GET",
+          "urlTemplate": "/get",
+          "templateParameters": [],
+          "description": "Returns GET data.\n",
+          "responses": [
+            {
+              "statusCode": 200,
+              "description": "OK",
+              "headers": []
+            }
+          ]
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), 'autoFetch')]"
+        ]
+      },      
+      {
+        "type": "Microsoft.ApiManagement/service/products/apis",
+        "name": "[variables('apimProductname')]",
+        "apiVersion": "2018-01-01",
+        "scale": null,
+        "properties": {},
+        "dependsOn": [
+          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), 'autoFetch')]"
+        ]
+      }
+    ]
+  }

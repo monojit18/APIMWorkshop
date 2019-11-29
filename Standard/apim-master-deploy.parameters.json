@@ -2,8 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "repoBaseUrl": {
-            "value": "file://Users/monojitdattams/Development/Projects/Workshops/APIMWorkshop/Standard"
+        "blobBaseUrl": {
+            "value": "https://workshopstorage.blob.core.windows.net/apimblob/"
+        },
+        "blobSASToken": {
+            "value": "?st=2019-11-28T20%3A01%3A10Z&se=2020-11-28T20%3A01%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=NaFSMyP3x53yi48Dft8zi9ztDpqTjozuJe1HO%2FqO6wo%3D"
         },
         "publisherEmail": {
             "value": "modatta@microsoft.com"
@@ -11,7 +14,7 @@
         "publisherName": {
             "value": "MODATTA"
         },
-        "ApimServiceName": {
+        "apimServiceName": {
             "value": "autoapim-dev"
         },        
         "sku": {

@@ -2,13 +2,19 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "repoBaseUrl":{
+        "blobBaseUrl":{
             "type": "string",
             "metadata": {
-                "description": "Base URL of the repository"
+                "description": "Base URL of the repo blob"
             }
         },
-        "ApimServiceName": {
+        "blobSASToken":{
+            "type": "string",
+            "metadata": {
+                "description": "SAS token of the repo blob"
+            }
+        },
+        "apimServiceName": {
             "type": "string",
             "metadata": {
                 "description" : "The name of the API Management"
@@ -45,7 +51,18 @@
             }
         }
     },
-    "variables": {},
+    "variables": {        
+        "templatesBaseURL": "[concat(parameters('blobBaseUrl'), 'templates/')]",
+        "serviceTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-service-deploy.json', parameters('blobSASToken'))]",
+        "usersTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-users-deploy.json', parameters('blobSASToken'))]",
+        "groupsTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-groups-deploy.json', parameters('blobSASToken'))]",
+        "groupsUsersTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-groupsusers-deploy.json', parameters('blobSASToken'))]",
+        "productAutoTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-productauto-deploy.json', parameters('blobSASToken'))]",
+        "subscriptionTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-subscription-deploy.json', parameters('blobSASToken'))]",
+        "versionSetTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-versionset-deploy.json', parameters('blobSASToken'))]",
+        "apiV1TemplateUri": "[concat(variables('templatesBaseURL'), 'apim-v1-deploy.json', parameters('blobSASToken'))]"
+
+    },
     "resources": [
         {
             "apiVersion": "2017-05-10",
@@ -54,172 +71,151 @@
             "properties": {
               "mode": "Incremental",
               "templateLink": {
-                 "uri":"[concat(parameters('repoBaseUrl'), '/service.template.json')]",
+                 "uri":"[variables('serviceTemplateUri')]",
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                "ApimServiceName": {"value": "[parameters('ApimServiceName')]" }, 
-                "PublisherName": {"value": "[parameters('PublisherName')]" },
-                "PublisherEmail": {"value": "[parameters('PublisherEmail')]" },
+                "apimServiceName": {"value": "[parameters('apimServiceName')]" }, 
+                "publisherName": {"value": "[parameters('publisherName')]" },
+                "publisherEmail": {"value": "[parameters('publisherEmail')]" },
                 "sku": {"value": "[parameters('sku')]" },
                  "skuCount": {"value": "[parameters('skuCount')]" }
                }
             }
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "usersTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('usersTemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+               }
+            },
+            "dependsOn": [
+             "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]"
+            ]
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "groupsTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('groupsTemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+               }
+            },
+            "dependsOn": [
+             "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]"
+            ]
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "productAutoTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('productAutoTemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+               }
+            },
+            "dependsOn": [
+             "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]",
+             "[resourceId('Microsoft.Resources/deployments', 'groupsTemplate')]"
+            ]
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "groupsUsersTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('groupsUsersTemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+               }
+            },
+            "dependsOn": [
+             "[resourceId('Microsoft.Resources/deployments', 'groupsTemplate')]",
+             "[resourceId('Microsoft.Resources/deployments', 'usersTemplate')]"
+            ]
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "subscriptionsTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('subscriptionTemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },
+                 "subscriptionName": {"value": "autoSubscription" },
+                 "productName": {"value": "productAuto" },
+                 "userName": {"value": "monojitOL" }
+               }
+            },
+            "dependsOn": [
+             "[resourceId('Microsoft.Resources/deployments', 'productAutoTemplate')]",
+             "[resourceId('Microsoft.Resources/deployments', 'usersTemplate')]"
+            ]
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "apiVersionSetTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('versionSetTemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+               }
+            },
+            "dependsOn": [
+             "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]"
+            ]
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "apiV1Template",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('apiV1TemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }                 
+               }
+            },
+            "dependsOn": [
+            "[resourceId('Microsoft.Resources/deployments', 'productAutoTemplate')]",
+             "[resourceId('Microsoft.Resources/deployments', 'apiVersionSetTemplate')]"
+            ]
          }
-         // ,
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "usersTemplate",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/users.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //     "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]"
-         //    ]
-         // },
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "groupsTemplate",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/groups.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //     "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]"
-         //    ]
-         // },
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "productStarterTemplate",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/product-starter/product-starter.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" },
-         //         "repoBaseUrl": {"value": "[parameters('repoBaseUrl')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //     "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]",
-         //     "[resourceId('Microsoft.Resources/deployments', 'groupsTemplate')]"
-         //    ]
-         // },
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "groupsUsersTemplate",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/groupsUsers.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //     "[resourceId('Microsoft.Resources/deployments', 'groupsTemplate')]",
-         //     "[resourceId('Microsoft.Resources/deployments', 'usersTemplate')]"
-         //    ]
-         // },
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "subscriptionsTemplate",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/subscriptions.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //     "[resourceId('Microsoft.Resources/deployments', 'productStarterTemplate')]",
-         //     "[resourceId('Microsoft.Resources/deployments', 'usersTemplate')]"
-         //    ]
-         // },
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "httpBinVersionSetTemplate",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/api-httpbin/api-httpbin.version-set.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //     "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]"
-         //    ]
-         // },
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "httpBinV1Template",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/api-httpbin/v1/api-httpbin.v1.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" },
-         //         "repoBaseUrl": {"value": "[parameters('repoBaseUrl')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //    "[resourceId('Microsoft.Resources/deployments', 'productStarterTemplate')]",
-         //     "[resourceId('Microsoft.Resources/deployments', 'httpBinVersionSetTemplate')]"
-         //    ]
-         // },
-         // {
-         //    "apiVersion": "2017-05-10",
-         //    "name": "httpBinV2Template",
-         //    "type": "Microsoft.Resources/deployments",
-         //    "properties": {
-         //      "mode": "Incremental",
-         //      "templateLink": {
-         //         "uri":"[concat(parameters('repoBaseUrl'), '/api-httpbin/v2/api-httpbin.v2.template.json')]",
-         //         "contentVersion":"1.0.0.0"
-         //      },
-         //      "parameters": {
-         //         "ApimServiceName": {"value": "[parameters('ApimServiceName')]" },
-         //         "repoBaseUrl": {"value": "[parameters('repoBaseUrl')]" }
-         //       }
-         //    },
-         //    "dependsOn": [
-         //    "[resourceId('Microsoft.Resources/deployments', 'productStarterTemplate')]",
-         //     "[resourceId('Microsoft.Resources/deployments', 'httpBinVersionSetTemplate')]",
-         //     "[resourceId('Microsoft.Resources/deployments', 'httpBinV1Template')]"
-         //    ]
-         // }
     ],
     "outputs": {}
 }
