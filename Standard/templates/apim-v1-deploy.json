@@ -8,10 +8,27 @@
     },
     "variables": {
         "apimAPIName": "[concat(parameters('apimServiceName'), '/autoFetch')]",
+        "apimSwaggerName": "[concat(parameters('apimServiceName'), '/petSwagger')]",
         "apimOperationGet": "[concat(parameters('apimServiceName'), '/autoFetch/get')]",
-        "apimProductname": "[concat(parameters('apimServiceName'), '/productAuto/autoFetch')]"
+        "apimProductName": "[concat(parameters('apimServiceName'), '/productAuto/autoFetch')]"
     },
     "resources": [
+      {
+        "type": "Microsoft.ApiManagement/service/apis",
+        "name": "[variables('apimSwaggerName')]",
+        "apiVersion": "2018-01-01",
+        "scale": null,
+        "properties": {
+          "displayName": "SwaggerPet",
+          "apiRevision": "1",
+          "description": "Swagger API",
+          "contentFormat": "swagger-link-json",
+          "contentValue": "http://petstore.swagger.io/v2/swagger.json",
+          "path": "swaggerpet",
+          "apiVersion": "v1",
+          "apiVersionSetId": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '/api-version-sets/swaggerVersionSet')]"     
+        }
+      },
       {
         "type": "Microsoft.ApiManagement/service/apis",
         "name": "[variables('apimAPIName')]",
@@ -36,7 +53,7 @@
         "apiVersion": "2018-01-01",
         "scale": null,
         "properties": {
-          "displayName": "RETRIEVE",
+          "displayName": "FETCH",
           "method": "GET",
           "urlTemplate": "/get",
           "templateParameters": [],
@@ -55,7 +72,7 @@
       },      
       {
         "type": "Microsoft.ApiManagement/service/products/apis",
-        "name": "[variables('apimProductname')]",
+        "name": "[variables('apimProductName')]",
         "apiVersion": "2018-01-01",
         "scale": null,
         "properties": {},

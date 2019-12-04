@@ -7,10 +7,22 @@
         }
     },
     "variables": {        
-        "apimVersionSetName": "[concat(parameters('apimServiceName'), '/autoapimVersionSet')]"
+        "apimVersionSetName": "[concat(parameters('apimServiceName'), '/autoapimVersionSet')]",
+        "swaggerVersionSetName": "[concat(parameters('apimServiceName'), '/swaggerVersionSet')]"
 
     },
     "resources": [
+        {
+            "name": "[variables('swaggerVersionSetName')]",
+            "type": "Microsoft.ApiManagement/service/api-version-sets",
+            "apiVersion": "2018-06-01-preview",
+            "properties": {
+                "description": "Version set for Swagger API",
+                "versionQueryName": "api-version-swagger",
+                "displayName": "SwaggerAPIs-DEV",
+                "versioningScheme": "segment"
+            }
+        },
         {
             "name": "[variables('apimVersionSetName')]",
             "type": "Microsoft.ApiManagement/service/api-version-sets",

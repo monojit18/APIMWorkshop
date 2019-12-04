@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "ApimServiceName": {
+        "apimServiceName": {
             "type": "string",
             "metadata": {
                 "description" : "The name of the API Management"
@@ -42,7 +42,7 @@
     "resources": [
         {
             "apiVersion": "2018-01-01",
-            "name": "[parameters('ApimServiceName')]",
+            "name": "[parameters('apimServiceName')]",
             "type": "Microsoft.ApiManagement/service",
             "location": "[resourceGroup().location]",
             "tags": {},
