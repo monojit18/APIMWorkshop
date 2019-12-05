@@ -1,7 +1,14 @@
+param([Parameter(Position=0, Mandatory=$true)]
+      [string] $acc,
+      [Parameter(Position=1, Mandatory=$true)]
+      [string] $cnt)
+
 $resourceGroup = "workshopsgroups"
 $location = "eastus"
-$accountName = "apimblobaccount"
-$containerName = "apimautoblob"
+$accountName = $acc
+$containerName = $cnt
+# $accountName = "apimblobaccount"
+# $containerName = "apimautoblob"
 $sku = "Standard_LRS"
 $kind = "BlobStorage"
 $accessTier = "Hot"
@@ -10,8 +17,9 @@ $storageAccount = Get-AzStorageAccount -ResourceGroupName $resourceGroup -Name $
 if (!$storageAccount)
 {
 
-    New-AzStorageAccount -ResourceGroupName $resourceGroup -Name $accountName -SkuName $sku `
-    -Location $location -Kind $kind -AccessTier $accessTier
+    $storageAccount = New-AzStorageAccount -ResourceGroupName $resourceGroup `
+    -Name $accountName -SkuName $sku -Location $location -Kind $kind `
+    -AccessTier $accessTier
 
 }
 

@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimServiceName": {
+          "type": "string"
+        },
+        "apimUserName": {
+          "type": "string"
+        }
+    },
+    "variables": {        
+        "apimUserName": "[concat(parameters('apimServiceName'), '/', parameters('apimUserName'))]"
+
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/users",
+            "name": "[variables('apimUserName')]",
+            "apiVersion": "2018-01-01",
+            "scale": null,
+            "properties": {
+                "firstName": "Monojit",
+                "lastName": "Datta",
+                "email": "monojit.datta@outlook.com",
+                "state": "active",
+                "note": "Internal consumer of our APIs",
+                "confirmation": "invite"
+            }
+        }
+    ]
+  }

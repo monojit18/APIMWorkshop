@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "blobBaseUrl": {
+            "value": "https://apimbsacc.blob.core.windows.net/apimbsblb/"
+        },
+        "blobSASToken": {
+            "value": "?sv=2018-11-09&sr=c&sig=Gm2r1Xg5d%2BYs6XwoLzch8BLgM9cuH6waAuY2buZPQw0%3D&st=2019-12-05T14%3A31%3A38Z&se=2021-12-05T14%3A31%3A38Z&sp=r"
+        },
+        "publisherEmail": {
+            "value": "modatta@microsoft.com"
+        },
+        "publisherName": {
+            "value": "MODATTA"
+        },
+        "apimServiceName": {
+            "value": "basic-apim-dev"
+        },        
+        "sku": {
+            "value": "Premium"
+        },        
+        "skuCount": {
+            "value": 1
+        }
+    }
+}
