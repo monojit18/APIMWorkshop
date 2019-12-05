@@ -4,11 +4,17 @@
     "parameters": {
         "apimServiceName": {
           "type": "string"
+        },        
+        "apimVersionSetToken": {
+          "type": "string"
+        },
+        "swaggerVersionSetToken": {
+          "type": "string"
         }
     },
     "variables": {        
-        "apimVersionSetName": "[concat(parameters('apimServiceName'), '/autoapimVersionSet')]",
-        "swaggerVersionSetName": "[concat(parameters('apimServiceName'), '/swaggerVersionSet')]"
+        "apimVersionSetName": "[concat(parameters('apimServiceName'), parameters('apimVersionSetToken'))]",
+        "swaggerVersionSetName": "[concat(parameters('apimServiceName'), parameters('swaggerVersionSetToken'))]"
 
     },
     "resources": [

@@ -60,7 +60,9 @@
         "productAutoTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-productauto-deploy.json', parameters('blobSASToken'))]",
         "subscriptionTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-subscription-deploy.json', parameters('blobSASToken'))]",
         "versionSetTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-versionset-deploy.json', parameters('blobSASToken'))]",
-        "apiV1TemplateUri": "[concat(variables('templatesBaseURL'), 'apim-v1-deploy.json', parameters('blobSASToken'))]"
+        "apiV1TemplateUri": "[concat(variables('templatesBaseURL'), 'apim-v1-deploy.json', parameters('blobSASToken'))]",
+        "apimVersionSetToken": "/autoapimVS",
+        "swaggerVersionSetToken": "/swaggerVS"
 
     },
     "resources": [
@@ -208,7 +210,9 @@
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }                 
+                  "apimServiceName": {"value": "[parameters('apimServiceName')]" },
+                  "apimVersionSetToken": {"value": "[variables('apimVersionSetToken')]" },
+                  "swaggerVersionSetToken": {"value": "[variables('swaggerVersionSetToken')]" }
                }
             },
             "dependsOn": [
