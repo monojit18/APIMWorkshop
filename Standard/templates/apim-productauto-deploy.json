@@ -11,14 +11,14 @@
         "apimGroupName": {
           "type": "string"
         },
-        "productName": {
+        "apimProductName": {
           "type": "string"
         }
     },
     "variables": {
-        "apimProductName": "[concat(parameters('apimServiceName'), '/', parameters('productName'))]",
-        "apimProductPolicyName": "[concat(parameters('apimServiceName'), '/', parameters('productName'), '/policy')]",
-        "apimProductGroupName": "[concat(parameters('apimServiceName'), '/', parameters('productName'), '/', parameters('apimGroupName'))]"
+        "apimProductName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'))]",
+        "apimProductPolicyName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'), '/policy')]",
+        "apimProductGroupName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'), '/', parameters('apimGroupName'))]"
 
     },
     "resources": [

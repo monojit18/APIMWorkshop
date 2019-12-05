@@ -66,7 +66,7 @@
         "apimGroupName": "autoapimgroup",
         "apimUserName": "monojitOL",
         "subscriptionName": "autoSubscription",
-        "productName": "productAuto",
+        "apimProductName": "productAuto",
         "apimAPIName": "autoFetch",
         "apimSwaggerName": "petSwagger"
 
@@ -163,7 +163,7 @@
               "parameters": {
                  "apimServiceName": {"value": "[parameters('apimServiceName')]" },
                  "apimGroupName": {"value": "[variables('apimGroupName')]" },
-                 "apimProductName": {"value": "[variables('productName')]" }
+                 "apimProductName": {"value": "[variables('apimProductName')]" }
                }
             },
             "dependsOn": [
@@ -184,7 +184,7 @@
               "parameters": {
                  "apimServiceName": {"value": "[parameters('apimServiceName')]" },
                  "subscriptionName": {"value": "[variables('subscriptionName')]" },
-                 "productName": {"value": "[variables('productName')]" },
+                 "apimProductName": {"value": "[variables('apimProductName')]" },
                  "apimUserName": {"value": "[variables('apimUserName')]" }
                }
             },
@@ -204,7 +204,9 @@
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },
+                 "apimVersionSetName": {"value": "[variables('apimVersionSetName')]" },
+                 "swaggerVersionSetName": {"value": "[variables('swaggerVersionSetName')]" }
                }
             },
             "dependsOn": [
@@ -223,8 +225,9 @@
               },
               "parameters": {
                   "apimServiceName": {"value": "[parameters('apimServiceName')]" },
-                  "apimVersionSetName": {"value": "[variables('apimVersionSetName')]" },
-                  "swaggerVersionSetName": {"value": "[variables('swaggerVersionSetName')]" }
+                  "apimAPIName": {"value": "[variables('apimAPIName')]" },
+                  "apimSwaggerName": {"value": "[variables('apimSwaggerName')]" },
+                  "apimProductName": {"value": "[variables('apimProductName')]" }
                }
             },
             "dependsOn": [
