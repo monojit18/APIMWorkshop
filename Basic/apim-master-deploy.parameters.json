@@ -15,7 +15,7 @@
             "value": "MODATTA"
         },
         "apimServiceName": {
-            "value": "basicapim-dev"
+            "value": "basic-apim-dev"
         },        
         "sku": {
             "value": "Premium"
