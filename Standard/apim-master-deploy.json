@@ -61,8 +61,14 @@
         "subscriptionTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-subscription-deploy.json', parameters('blobSASToken'))]",
         "versionSetTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-versionset-deploy.json', parameters('blobSASToken'))]",
         "apiV1TemplateUri": "[concat(variables('templatesBaseURL'), 'apim-v1-deploy.json', parameters('blobSASToken'))]",
-        "apimVersionSetToken": "/autoapimVS",
-        "swaggerVersionSetToken": "/swaggerVS"
+        "apimVersionSetName": "autoapimVS",
+        "swaggerVersionSetName": "swaggerVS",
+        "apimGroupName": "autoapimgroup",
+        "apimUserName": "monojitOL",
+        "subscriptionName": "autoSubscription",
+        "productName": "productAuto",
+        "apimAPIName": "autoFetch",
+        "apimSwaggerName": "petSwagger"
 
     },
     "resources": [
@@ -81,7 +87,7 @@
                 "publisherName": {"value": "[parameters('publisherName')]" },
                 "publisherEmail": {"value": "[parameters('publisherEmail')]" },
                 "sku": {"value": "[parameters('sku')]" },
-                 "skuCount": {"value": "[parameters('skuCount')]" }
+                "skuCount": {"value": "[parameters('skuCount')]" }
                }
             }
          },
@@ -96,7 +102,8 @@
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },
+                 "apimUserName": {"value": "[variables('apimUserName')]" }
                }
             },
             "dependsOn": [
@@ -114,30 +121,12 @@
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },
+                 "apimGroupName": {"value": "[variables('apimGroupName')]" }
                }
             },
             "dependsOn": [
              "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]"
-            ]
-         },
-         {
-            "apiVersion": "2017-05-10",
-            "name": "productAutoTemplate",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-              "mode": "Incremental",
-              "templateLink": {
-                 "uri":"[variables('productAutoTemplateUri')]",
-                 "contentVersion":"1.0.0.0"
-              },
-              "parameters": {
-                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
-               }
-            },
-            "dependsOn": [
-             "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]",
-             "[resourceId('Microsoft.Resources/deployments', 'groupsTemplate')]"
             ]
          },
          {
@@ -151,12 +140,35 @@
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                 "apimServiceName": {"value": "[parameters('apimServiceName')]" }
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },
+                 "apimGroupName": {"value": "[variables('apimGroupName')]" },
+                 "apimUserName": {"value": "[variables('apimUserName')]" }
                }
             },
             "dependsOn": [
              "[resourceId('Microsoft.Resources/deployments', 'groupsTemplate')]",
              "[resourceId('Microsoft.Resources/deployments', 'usersTemplate')]"
+            ]
+         },
+         {
+            "apiVersion": "2017-05-10",
+            "name": "productAutoTemplate",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+              "mode": "Incremental",
+              "templateLink": {
+                 "uri":"[variables('productAutoTemplateUri')]",
+                 "contentVersion":"1.0.0.0"
+              },
+              "parameters": {
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },
+                 "apimGroupName": {"value": "[variables('apimGroupName')]" },
+                 "apimProductName": {"value": "[variables('productName')]" }
+               }
+            },
+            "dependsOn": [
+             "[resourceId('Microsoft.Resources/deployments', 'serviceTemplate')]",
+             "[resourceId('Microsoft.Resources/deployments', 'groupsTemplate')]"
             ]
          },
          {
@@ -171,9 +183,9 @@
               },
               "parameters": {
                  "apimServiceName": {"value": "[parameters('apimServiceName')]" },
-                 "subscriptionName": {"value": "autoSubscription" },
-                 "productName": {"value": "productAuto" },
-                 "userName": {"value": "monojitOL" }
+                 "subscriptionName": {"value": "[variables('subscriptionName')]" },
+                 "productName": {"value": "[variables('productName')]" },
+                 "apimUserName": {"value": "[variables('apimUserName')]" }
                }
             },
             "dependsOn": [
@@ -211,8 +223,8 @@
               },
               "parameters": {
                   "apimServiceName": {"value": "[parameters('apimServiceName')]" },
-                  "apimVersionSetToken": {"value": "[variables('apimVersionSetToken')]" },
-                  "swaggerVersionSetToken": {"value": "[variables('swaggerVersionSetToken')]" }
+                  "apimVersionSetName": {"value": "[variables('apimVersionSetName')]" },
+                  "swaggerVersionSetName": {"value": "[variables('swaggerVersionSetName')]" }
                }
             },
             "dependsOn": [

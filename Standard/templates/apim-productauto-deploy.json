@@ -7,12 +7,18 @@
             "metadata": {
                 "description": "The name of the API Management"
             }
+        },
+        "apimGroupName": {
+          "type": "string"
+        },
+        "productName": {
+          "type": "string"
         }
     },
     "variables": {
-        "apimProductName": "[concat(parameters('apimServiceName'), '/productAuto')]",
-        "apimProductPolicyName": "[concat(parameters('apimServiceName'), '/productAuto/policy')]",
-        "apimProductGroupName": "[concat(parameters('apimServiceName'), '/productAuto/autoapimgroup')]"
+        "apimProductName": "[concat(parameters('apimServiceName'), '/', parameters('productName'))]",
+        "apimProductPolicyName": "[concat(parameters('apimServiceName'), '/', parameters('productName'), '/policy')]",
+        "apimProductGroupName": "[concat(parameters('apimServiceName'), '/', parameters('productName'), '/', parameters('apimGroupName'))]"
 
     },
     "resources": [

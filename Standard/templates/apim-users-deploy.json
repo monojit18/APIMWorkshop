@@ -4,10 +4,13 @@
     "parameters": {
         "apimServiceName": {
           "type": "string"
+        },
+        "apimUserName": {
+          "type": "string"
         }
     },
     "variables": {        
-        "apimUserName": "[concat(parameters('apimServiceName'), '/monojitOL')]"
+        "apimUserName": "[concat(parameters('apimServiceName'), '/', parameters('apimUserName'))]"
 
     },
     "resources": [

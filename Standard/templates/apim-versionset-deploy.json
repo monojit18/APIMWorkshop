@@ -5,16 +5,16 @@
         "apimServiceName": {
           "type": "string"
         },        
-        "apimVersionSetToken": {
+        "apimVersionSetName": {
           "type": "string"
         },
-        "swaggerVersionSetToken": {
+        "swaggerVersionSetName": {
           "type": "string"
         }
     },
     "variables": {        
-        "apimVersionSetName": "[concat(parameters('apimServiceName'), parameters('apimVersionSetToken'))]",
-        "swaggerVersionSetName": "[concat(parameters('apimServiceName'), parameters('swaggerVersionSetToken'))]"
+        "apimVersionSetName": "[concat(parameters('apimServiceName'), '/', parameters('apimVersionSetName'))]",
+        "swaggerVersionSetName": "[concat(parameters('apimServiceName'), '/', parameters('swaggerVersionSetName'))]"
 
     },
     "resources": [

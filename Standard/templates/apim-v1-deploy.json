@@ -4,13 +4,22 @@
     "parameters": {
       "apimServiceName": {
         "type": "string"
+      },
+      "apimAPIName": {
+        "type": "string"
+      },
+      "apimSwaggerName": {
+        "type": "string"
+      },
+      "apimProductName": {
+        "type": "string"
       }
     },
     "variables": {
-        "apimAPIName": "[concat(parameters('apimServiceName'), '/autoFetch')]",
-        "apimSwaggerName": "[concat(parameters('apimServiceName'), '/petSwagger')]",
-        "apimOperationGet": "[concat(parameters('apimServiceName'), '/autoFetch/get')]",
-        "apimProductName": "[concat(parameters('apimServiceName'), '/productAuto/autoFetch')]"
+        "apimAPIName": "[concat(parameters('apimServiceName'), '/', parameters('apimAPIName'))]",
+        "apimSwaggerName": "[concat(parameters('apimServiceName'), '/', parameters('apimSwaggerName'))]",
+        "apimOperationGet": "[concat(parameters('apimServiceName'), '/', parameters('apimAPIName'), '/get')]",
+        "apimProductName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'), '/', parameters('apimAPIName'))]"
     },
     "resources": [
       {

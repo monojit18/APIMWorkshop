@@ -4,10 +4,13 @@
     "parameters": {
         "apimServiceName": {
           "type": "string"
+        },
+        "apimGroupName": {
+          "type": "string"
         }
     },
     "variables": {        
-        "apimGroupName": "[concat(parameters('apimServiceName'), '/autoapimgroup')]"
+        "apimGroupName": "[concat(parameters('apimServiceName'), '/', parameters('apimGroupName'))]"
 
     },
     "resources": [

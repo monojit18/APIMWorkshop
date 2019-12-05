@@ -11,7 +11,7 @@
       "productName": {
         "type": "string"
       },
-      "userName": {
+      "apimUserName": {
         "type": "string"
       }
     },
@@ -25,7 +25,7 @@
         "name": "[variables('apimSubscriptionName')]",
         "apiVersion": "2018-01-01",
         "properties": {
-          "userId": "[resourceId('Microsoft.ApiManagement/service/users', parameters('apimServiceName'), parameters('userName'))]",
+          "userId": "[resourceId('Microsoft.ApiManagement/service/users', parameters('apimServiceName'), parameters('apimUserName'))]",
           "productId": "[resourceId('Microsoft.ApiManagement/service/products', parameters('apimServiceName'), parameters('productName'))]",
           "displayName": "Auto product subscription",
           "state": "active"
