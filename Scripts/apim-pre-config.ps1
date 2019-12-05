@@ -38,7 +38,7 @@ $blobEndPoint += $containerName
 Write-Host "Blob EndPoint: $blobEndPoint"
 
 $startTime = Get-Date
-$expiryTime = $startTime.AddYears(1)
+$expiryTime = $startTime.AddYears(2)
 
 $containerSASToken = New-AzStorageContainerSASToken -Name $containerName -Permission "r" `
 -StartTime $startTime -ExpiryTime $expiryTime -Context $storageAccountContext
