@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "blobBaseUrl": {
-            "value": "https://workshopstorage.blob.core.windows.net/apimblob/"
+            "value": "https://apimblobaccount.blob.core.windows.net/apimautoblob/"
         },
         "blobSASToken": {
-            "value": "?st=2019-11-28T20%3A01%3A10Z&se=2020-11-28T20%3A01%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=NaFSMyP3x53yi48Dft8zi9ztDpqTjozuJe1HO%2FqO6wo%3D"
+            "value": "?sv=2018-11-09&sr=c&sig=%2FkomUOPHvkYIyNJB5jtwAC%2FhaOFNkywmgEy3Ota%2FeTw%3D&st=2019-12-05T01%3A37%3A38Z&se=2020-12-05T01%3A37%3A38Z&sp=r"
         },
         "publisherEmail": {
             "value": "modatta@microsoft.com"
