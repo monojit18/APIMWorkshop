@@ -58,8 +58,7 @@
         "versionSetTemplateUri": "[concat(variables('templatesBaseURL'), 'apim-versionset-deploy.json', parameters('blobSASToken'))]",
         "apiV1TemplateUri": "[concat(variables('templatesBaseURL'), 'apim-v1-deploy.json', parameters('blobSASToken'))]",
         "apimVersionSetName": "autoapimVS",
-        "swaggerVersionSetName": "swaggerVS",
-        "apimGroupName": "autoapimgroup",        
+        "swaggerVersionSetName": "swaggerVS",        
         "apimProductName": "productAuto",
         "apimAPIName": "autoFetch",
         "apimSwaggerName": "petSwagger"
@@ -96,8 +95,7 @@
                  "contentVersion":"1.0.0.0"
               },
               "parameters": {
-                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },
-                 "apimGroupName": {"value": "[variables('apimGroupName')]" },
+                 "apimServiceName": {"value": "[parameters('apimServiceName')]" },                 
                  "apimProductName": {"value": "[variables('apimProductName')]" }
                }
             },
