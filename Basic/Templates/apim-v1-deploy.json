@@ -54,7 +54,7 @@
           "apiRevision": "1",
           "description": "API Management facade for a very handy and free online HTTP tool",
           "serviceUrl": "https://httpbin.org",
-          "path": "autofetch",
+          "path": "basicfetch",
           "protocols": [
             "http"
           ],          
@@ -82,7 +82,7 @@
           ]
         },
         "dependsOn": [
-          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), 'autoFetch')]"
+          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), parameters('apimProductName'))]"
         ]
       },      
       {
@@ -92,7 +92,7 @@
         "scale": null,
         "properties": {},
         "dependsOn": [
-          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), 'autoFetch')]"
+          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), parameters('apimProductName'))]"
         ]
       }
     ]
