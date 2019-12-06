@@ -8,17 +8,13 @@
                 "description": "The name of the API Management"
             }
         },
-        "apimGroupName": {
-          "type": "string"
-        },
         "apimProductName": {
           "type": "string"
         }
     },
     "variables": {
         "apimProductName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'))]",
-        "apimProductPolicyName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'), '/policy')]",
-        "apimProductGroupName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'), '/', parameters('apimGroupName'))]"
+        "apimProductPolicyName": "[concat(parameters('apimServiceName'), '/', parameters('apimProductName'), '/policy')]"        
 
     },
     "resources": [
@@ -45,17 +41,7 @@
                 "contentFormat": "rawxml"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/products', parameters('apimServiceName'), 'productAuto')]"
-            ]
-        },
-        {
-            "type": "Microsoft.ApiManagement/service/products/groups",
-            "name": "[variables('apimProductGroupName')]",
-            "apiVersion": "2017-03-01",
-            "scale": null,
-            "properties": {},
-            "dependsOn": [
-                "[resourceId('Microsoft.ApiManagement/service/products', parameters('apimServiceName'), 'productAuto')]"
+                "[resourceId('Microsoft.ApiManagement/service/products', parameters('apimServiceName'), parameters('apimProductName'))]"
             ]
         }
     ],
