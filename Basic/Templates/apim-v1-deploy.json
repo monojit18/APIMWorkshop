@@ -82,7 +82,7 @@
           ]
         },
         "dependsOn": [
-          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), parameters('apimProductName'))]"
+          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), parameters('apimAPIName'))]"
         ]
       },      
       {
@@ -92,7 +92,7 @@
         "scale": null,
         "properties": {},
         "dependsOn": [
-          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), parameters('apimProductName'))]"
+          "[resourceId('Microsoft.ApiManagement/service/apis', parameters('apimServiceName'), parameters('apimAPIName'))]"
         ]
       }
     ]
