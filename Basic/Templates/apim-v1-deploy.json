@@ -13,6 +13,12 @@
       },
       "apimProductName": {
         "type": "string"
+      },
+      "apimVersionSetName": {
+        "type": "string"
+      },
+      "swaggerVersionSetName": {
+        "type": "string"
       }
     },
     "variables": {
@@ -35,7 +41,7 @@
           "contentValue": "http://petstore.swagger.io/v2/swagger.json",
           "path": "swaggerpet",
           "apiVersion": "v1",
-          "apiVersionSetId": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '/api-version-sets/swaggerVersionSet')]"     
+          "apiVersionSetId": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '/api-version-sets/', parameters('swaggerVersionSetName'))]"     
         }
       },
       {
@@ -53,7 +59,7 @@
             "http"
           ],          
           "apiVersion": "v1",
-          "apiVersionSetId": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '/api-version-sets/autoapimVersionSet')]"
+          "apiVersionSetId": "[concat(resourceId('Microsoft.ApiManagement/service', parameters('apimServiceName')), '/api-version-sets/', parameters('apimVersionSetName'))]"
         }
       },
       {

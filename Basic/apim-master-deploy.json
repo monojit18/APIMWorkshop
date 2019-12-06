@@ -137,7 +137,9 @@
                   "apimServiceName": {"value": "[parameters('apimServiceName')]" },
                   "apimAPIName": {"value": "[variables('apimAPIName')]" },
                   "apimSwaggerName": {"value": "[variables('apimSwaggerName')]" },
-                  "apimProductName": {"value": "[variables('apimProductName')]" }
+                  "apimProductName": {"value": "[variables('apimProductName')]" },
+                  "apimVersionSetName": {"value": "[variables('apimVersionSetName')]" },
+                  "swaggerVersionSetName": {"value": "[variables('swaggerVersionSetName')]" }
                }
             },
             "dependsOn": [
