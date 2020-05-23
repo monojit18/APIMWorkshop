@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apimServiceName": {
+          "type": "string"
+        },
+        "apimGroupName": {
+          "type": "string"
+        }
+    },
+    "variables": {        
+        "apimGroupName": "[concat(parameters('apimServiceName'), '/', parameters('apimGroupName'))]"
+
+    },
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service/groups",
+            "name": "[variables('apimGroupName')]",
+            "apiVersion": "2018-01-01",
+            "scale": null,
+            "properties": {
+                "displayName": "Auto APIM Group",
+                "description": "Group containing all developers from Auto who will be consuming our APIs",
+                "type": "custom"                
+
+            }
+        }
+    ]
+  }
