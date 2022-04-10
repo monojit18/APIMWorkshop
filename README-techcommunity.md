@@ -21,13 +21,11 @@ Azure API Management has deep integrations with Azure AD which in turn has suppo
 
 ### Configure Azure AD
 
-#### Register an Application to represent te Back end APIs
+#### Register an Application to represent the Back end APIs
 
 - Follow these [Steps](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-protect-backend-with-aad#1-register-an-application-in-azure-ad-to-represent-the-api) to register
 
 - Let us call this **ServerApp** to better correlate 
-
-  ![aad-secrets](./Assets/aad-secrets.png)
 
 - Go to **Manifest** section of the app and update
 
@@ -54,7 +52,40 @@ Azure API Management has deep integrations with Azure AD which in turn has suppo
 
   ![aad-expose-api](./Assets/aad-expose-api.png)
 
-- 
 
 
+#### Register an Application to represent the Client to Access backend APIs
 
+- Follow these [Steps](https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-protect-backend-with-aad#2-register-another-application-in-azure-ad-to-represent-a-client-application) to register
+
+- Let us call this **ClientApp** to better correlate 
+
+  ![aad-secrets](./Assets/aad-secrets.png)
+
+  
+
+  ![aad-client-api-perm](./Assets/aad-client-api-perm.png)
+
+- Go to **Authentication** section and modify as below
+
+  - Select **Multi-tenant** or **Single-tenant** option as per requiremet
+
+  ![aad-auth](./Assets/aad-auth.png)
+
+  
+
+  ![aad-auth2](./Assets/aad-auth2.png)
+
+  
+
+#### Configure API Management
+
+- Configure as shown in the below screen shots; these are *self-explanatory*
+
+![apim-oauth](./Assets/apim-oauth.png)
+
+![apim-oauth2](./Assets/apim-oauth2.png)
+
+![apim-oauth3](./Assets/apim-oauth3.png)
+
+![apim-oauth4](./Assets/apim-oauth4.png)
