@@ -48,6 +48,24 @@ Azure API Management has deep integrations with Azure AD which in turn has suppo
 
   
 
+  - [**App Roles**](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps) can also be included in the *Token Configuration*
+    - **Roles** will be granted permission by *Administrator*
+    - *Administrator* will then add Roles to **Users/Groups**
+    - **Roles** are returned as part of the **Token**; *Applications* can use that to appropriate action
+
+
+  ![app-roles-create](./Assets/app-roles-create.png)
+
+  
+
+  ![app-roles-admin](./Assets/app-roles-admin.png)
+
+  
+
+  ![app-roles-user-groups](./Assets/app-roles-user-groups.png)
+
+  
+
 - Go to **Expose API** section and Add **Scope**
 
   ![aad-expose-api](./Assets/aad-expose-api.png)
@@ -116,7 +134,7 @@ Azure API Management has deep integrations with Azure AD which in turn has suppo
           <base />
         <!--Check the validity of the Bearer Token-->
           <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="UnAuthorized">
-              <openid-config url="https://login.microsoftonline.com/3851f269-b22b-4de6-97d6-aa9fe60fe301/.well-known/openid-configuration" />            
+              <openid-config url="https://login.microsoftonline.com/<tenant-id>/.well-known/openid-configuration" />            
           </validate-jwt>        
       </inbound>
       <backend>
@@ -145,7 +163,7 @@ Azure API Management has deep integrations with Azure AD which in turn has suppo
           <base />
   <!--Check the validity of the Bearer Token-->
           <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="UnAuthorized">
-              <openid-config url="https://login.microsoftonline.com/3851f269-b22b-4de6-97d6-aa9fe60fe301/.well-known/openid-configuration" />
+              <openid-config url="https://login.microsoftonline.com/<tenant-id>/.well-known/openid-configuration" />
   <!--Check the claims of the Bearer Token-->
               <required-claims>
                   <claim name="aud" match="all">
@@ -181,7 +199,7 @@ Azure API Management has deep integrations with Azure AD which in turn has suppo
           <base />
   <!--Check the validity of the Bearer Token-->
           <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="UnAuthorized">
-              <openid-config url="https://login.microsoftonline.com/3851f269-b22b-4de6-97d6-aa9fe60fe301/.well-known/openid-configuration" />
+              <openid-config url="https://login.microsoftonline.com/<tenant-id>/.well-known/openid-configuration" />
   <!--Check the claims of the Bearer Token-->
               <required-claims>
                   <claim name="aud" match="all">
