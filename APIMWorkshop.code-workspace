@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "./Scripts"
+		},
+        {
+			"path": "./Standard"
+		},
+        {
+			"path": "./Basic"
+		},
+        {
+			"path": "README.md"
+		}
+	],
+	"settings": {}
+}

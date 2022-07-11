@@ -1,4 +1,5 @@
 !.gitignore
+.DS_Store
 .vscode
 B2C
 Gateway
